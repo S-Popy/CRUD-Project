@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Add Musician{% endblock title %}
+
+{% block content %}
+
+<div  style = "width:50%; margin:auto">
+    <h1 class = "text-center text-white my-5 p-2" style ="background-color: #00796b">Add Musician</h1>
+    <form action="" method = "post" novalidate>
+        {% csrf_token %}
+        {{form | crispy}}
+        <input class = "btn btn-primary" type="submit" value="Submit">
+        <a href="{% url 'home' %}" class="btn btn-danger">Cancel</a>
+    </form>
+</div>
+
+{% endblock content %}

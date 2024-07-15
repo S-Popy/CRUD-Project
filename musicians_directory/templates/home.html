@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class = "text-center text-white my-5 p-2" style ="background-color: #00796b">Music Details</h1>
+    <table class="table table-hover" style = "background-color:#99ccc6">
+        <thead>
+          <tr class = "text-center">
+            <th scope="col">ID</th>
+            <th scope="col">Musician Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Album Rating</th>
+            <th scope="col">Instrument Type</th>
+            <th scope="col">Album Name</th>
+            <th scope="col">Release Date</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if data %}
+                {% for dt in data %}
+                <tr class = "text-center">
+                  <th scope="row">{{dt.id}}</th>
+                  <td><a href="{% url 'edit_musician' dt.musician.id %}" style="text-decoration: none;">
+                    {{ dt.musician.first_name }} {{ dt.musician.last_name }}
+                </a></td>
+                  <td>{{ dt.musician.email }}</td>
+                  <td>{{ dt.rating }}</td>
+                  <td>{{ dt.musician.instrument_type }}</td>
+                  <td>{{ dt.album_name }}</td>
+                  <td>{{ dt.release_date }}</td>
+                  <td>
+                    <a href="{% url 'edit_data' dt.id %}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{% url 'delete_data' dt.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-danger" value="Delete">
+                    </form>
+                  </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="8" class="text-center"><h1>No Records</h1></td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}
